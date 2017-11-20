@@ -30,7 +30,8 @@ class Tower{
       return json_encode($this->get_tower_array());
   }
 
-  
+  /*
+  to rewrite with move object
   public function list_moves_availables(){
     $moves = array(
       array('from'  => 0, 'to'  => 1),
@@ -49,7 +50,7 @@ class Tower{
     }
     return $movesAvailables;
   }
-  
+  */
   private function get_tower_array(){
     return array(
       $this->tower0,
@@ -59,15 +60,19 @@ class Tower{
   }
   private function check_if_move_is_available(Move $move){
     $fromTower = "tower".$move->from;
-    $toTower = "tower".$move->to;
-    if(($from == $to) || (empty($this->$fromTower)) || (end($this->$toTower) < end($this->$fromTower))){
+    $toTower = "tower".(string)$move->to;
+    echo "kk$toTower\n".$move."|";
+    print_r($this->{$toTower});
+    //echo end($this->$toTower)."|". end($this->$fromTower);
+    
+    if(($move!==false) || (empty($this->$fromTower)) || (end($this->$toTower) < end($this->$fromTower))){
       return false;
     }
     return true;
   }
   
   public function add_move(Move $move){
-    if($this->check_if_move_is_available($move->from,$move->to)){
+    if($this->check_if_move_is_available($move)){
         $towerArr = $this->get_tower_array();
         $towerArr[$move->to][] = end($towerArr[$move->from]);
         array_pop($towerArr[$move->from]);
@@ -164,20 +169,17 @@ class Move{
           case "1 to 0":
             $move->set_value(Move::$from1to0);
             break;
-          
           case "1 to 2":
             $move->set_value(Move::$from1to2);
             break;
-        
           case "2 to 0":
             $move->set_value(Move::$from2to0);
             break;
-          
           case "2 to 1":
             $move->set_value(Move::$from2to1);
             break;
           default:
-            return;
+            return false;
             break;
         }
         return $move;

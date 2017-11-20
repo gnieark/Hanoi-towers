@@ -6,7 +6,11 @@ include("class.towers.php");
 
 
 $tower = new Tower($discCount);
-echo $tower;
+echo "1".$tower."\n";
+$move = new Move();
+$move->make("0 to 1");
+$tower = $tower->add_move($move);
+echo "2".$tower."\n";
 /*
 resolveHanoi($tower);
 
