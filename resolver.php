@@ -6,6 +6,8 @@ include("class.towers.php");
 
 
 $tower = new Tower($discCount);
+echo $tower;
+/*
 resolveHanoi($tower);
 
 function resolveHanoi($tower){
@@ -14,10 +16,11 @@ function resolveHanoi($tower){
     $availablesMoves = $tower->list_moves_availables();
     
     //don't take moves that will generate an ever used tower configuration
-    $useful_moves = array(); 
+    $useful_moves = array();
     foreach($availablesMoves as $move){
         
     }
 
 
 }
+*/
