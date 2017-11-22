@@ -1,6 +1,6 @@
 <?php
 
-$discCount = 6;
+$discCount = 3;
 //load the class
 include("class.towers.php");
 
@@ -14,7 +14,7 @@ function resolveHanoi(Tower $tower, Steps $steps){
     $result = false;
     
     if($tower->is_won()){
-      echo "\nSolution founded. Reverse this steps:\n".$tower;
+      echo "\nSolution founded. Reverse these steps:\n".$tower;
       return true;
     }
     $availablesMoves = $tower->list_moves_availables();
