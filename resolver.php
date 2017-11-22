@@ -4,11 +4,9 @@ $discCount = 6;
 //load the class
 include("class.towers.php");
 
-
 $tower = new Tower($discCount);
 $steps = new Steps(array());
 $steps->add_step($tower);
-
 
 resolveHanoi($tower,$steps);
 
