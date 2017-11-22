@@ -6,36 +6,33 @@ include("class.towers.php");
 
 
 $tower = new Tower($discCount);
-$steps = new Steps();
-/*
-echo "1".$tower."\n";
-$move = Move::make(0,2);
-$tower = $tower->add_move($move);
-echo "2".$tower."\n";
-print_r($tower->list_moves_availables());
-*/
+$steps = new Steps(array());
+$steps->add_step($tower);
 
-resolveHanoi($tower);
+
+resolveHanoi($tower,$steps);
 
 function resolveHanoi(Tower $tower, Steps $steps){
-
-    $steps->add_step($tower);
+    $result = false;
+    
+    if($tower->is_won()){
+      echo "\nSolution founded. Reverse this steps:\n".$tower;
+      return true;
+    }
     $availablesMoves = $tower->list_moves_availables();
-    
     //take only the moves who will generate a new unknowed Tower
-    $uniquesAvailableMoves = array(); 
+    
     foreach($availablesMoves as $move){
-      $newTower = $tower-> add_move($move);
-      //to do check if unique ************************************************
+      $newTower = $tower->add_move($move);
+      $newSteps = $steps;
+ 
+      if($newSteps->add_step($newTower)){
+        $r = resolveHanoi($newTower,$newSteps);
+        if($r){
+          $result = true;
+          echo "\n".$tower;
+        }
+      }
     }
-    
-    
-    
-    //don't take moves that will generate an ever used tower configuration
-    $useful_moves = array();
-    foreach($availablesMoves as $move){
-        
-    }
-
-
+    return $result;
 }

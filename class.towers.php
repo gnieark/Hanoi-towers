@@ -44,7 +44,7 @@ class Tower{
     return $movesAvailables;
   }
   
-  private function get_tower_array(){
+  public function get_tower_array(){
     return array(
       $this->tower0,
       $this->tower1,
@@ -73,6 +73,14 @@ class Tower{
         $towerArr[$move->to][] = end($towerArr[$move->from]);
         array_pop($towerArr[$move->from]);
         return new Tower( $this->discsCount, $towerArr );
+    }
+    return false;
+  }
+  public function is_won(){
+    $arr = $this->get_tower_array();
+    if ((empty($arr[0]) && empty($arr[1]))
+        ||(empty($arr[0]) && empty($arr[2]))){
+          return true;
     }
     return false;
   }
@@ -178,7 +186,7 @@ class Steps{
   *Memorise the differents towers configurations
   */
   private $steps;
-  public function __construct($steps){
+  public function __construct(){
     $this->steps = array();
   }
   
@@ -186,7 +194,7 @@ class Steps{
     $exp = 0;
     $total = 0;
     foreach($column as $elem){
-      $total += $elem * pow( $base , $exp );
+      $total =$total + ($elem + 1) * pow( $base + 1 , $exp );
       $exp++;
     }
     return $total;
@@ -194,21 +202,19 @@ class Steps{
   
   private function convert_tower_to_int(Tower $tower){
     $arrTower = $tower->get_tower_array();
-    
     return
-      $this::convert_column_to_int($arrTower[0]) +
-      $this::convert_column_to_int($arrTower[1]) * pow(10,$tower->discsCount) +
-      $this::convert_column_to_int($arrTower[2]) * pow(10,2 * $tower->discsCount);
+      $this::convert_column_to_int($arrTower[0],$tower->discsCount) +
+      $this::convert_column_to_int($arrTower[1],$tower->discsCount) * pow(10,$tower->discsCount) +
+      $this::convert_column_to_int($arrTower[2],$tower->discsCount) * pow(10,2 * $tower->discsCount);
   }
-  
+
   public function add_step(Tower $tower){
- 
     $towerValue = $this::convert_tower_to_int($tower);
-    
     if(in_array($towerValue,$this->steps)){
-      return false;
+      return false;      
     }else{
       $this->steps[] = $towerValue; 
+      return true;
     }
   }
 }

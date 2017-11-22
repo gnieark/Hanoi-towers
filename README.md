@@ -1,3 +1,5 @@
 # Hanoi Tower recursive resolution
 
-Work in progress
+Resolve this problem by
+   php resolver.php > result.php
+
