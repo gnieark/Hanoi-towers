@@ -1,8 +1,13 @@
 <?php
+/*
+* Hanoi towers ' resolver
+* Copyright (C) 2017 Gnieark https://blog-du-grouik.tinad.fr/
+* licensed under the terms of the GNU General Public V3. See License file.
+*/
 
-$discCount = 3;
+$discCount = 15;
 //load the class
-include("class.towers.php");
+include("inc.php");
 
 $tower = new Tower($discCount);
 $steps = new Steps(array());
@@ -14,11 +19,13 @@ function resolveHanoi(Tower $tower, Steps $steps){
     $result = false;
     
     if($tower->is_won()){
-      echo "\nSolution founded. Reverse these steps:\n".$tower;
+      echo "a winning suite was found:\n";
+      foreach($steps->steps as $oneTower){
+        echo $oneTower."\n";
+      }
       return true;
     }
     $availablesMoves = $tower->list_moves_availables();
-    //take only the moves who will generate a new unknowed Tower
     
     foreach($availablesMoves as $move){
       $newTower = $tower->add_move($move);
@@ -28,7 +35,6 @@ function resolveHanoi(Tower $tower, Steps $steps){
         $r = resolveHanoi($newTower,$newSteps);
         if($r){
           $result = true;
-          echo "\n".$tower;
         }
       }
     }
