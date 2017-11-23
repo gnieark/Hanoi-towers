@@ -5,7 +5,7 @@
 * licensed under the terms of the GNU General Public V3. See License file.
 */
 
-$discCount = 15;
+$discCount = 6;
 //load the class
 include("inc.php");
 
